@@ -1,0 +1,42 @@
+<div id="connection-count"></div>
+<div id="status-message"></div>
+
+<div id="choices">
+  <h2><%= poll.question %></h2>
+  <button id="response-a">A</button>
+  <button id="response-b">B</button>
+  <button id="response-c">C</button>
+  <button id="response-d">D</button>
+</div>
+<br/>
+
+<div id="vote-count"></div>
+<div id="your-vote"></div>
+
+<table class="striped">
+  <thead>
+    <tr>
+        <th data-field="id">Poll Choice</th>
+        <th data-field="name">Vote Count</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td id="response-a">A</td>
+      <td id="a-votes">0</td>
+    </tr>
+    <tr>
+      <td id="response-b">B</td>
+      <td id="b-votes">0</td>
+    </tr>
+    <tr>
+      <td id="response-c">C</td>
+      <td id="c-votes">0</td>
+    </tr>
+    <tr>
+      <td id="response-d">D</td>
+      <td id="d-votes">0</td>
+    </tr>
+  </tbody>
+</table>
