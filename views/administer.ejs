@@ -1,19 +1,83 @@
-<h1>Placeholder for Administering Poll Form</h1>
-<form method="POST" action="/poll" id="new-poll">
-  Question:<br>
-  <input type="text" placeholder="question" name="poll[question]"><br>
-  Response A:<br>
-  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
-  Response B:<br>
-  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
-  Response C:<br>
-  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
-  Response D:<br>
-  <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
-  Admin ID:<br>
-  <input type="text" placeholder="enter admin ID" class="poll-admin-id" name="poll[adminId]"><br>
-  <button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Collaborative</title>
 
-<script src="/socket.io/socket.io.js"></script>
-<script src="/client.js"></script>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+</head>
+<body>
+
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Collaborative</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h1>Create Your Poll</h1>
+        <form method="POST" action="/poll" id="new-poll">
+          Question:<br>
+          <input type="text" placeholder="question" name="poll[question]"><br>
+          Response A:<br>
+          <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
+          Response B:<br>
+          <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
+          Response C:<br>
+          <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
+          Response D:<br>
+          <input type="text" placeholder="enter option" class="poll-response" name="poll[responses][]"><br>
+          Admin ID:<br>
+          <input type="text" placeholder="enter admin ID" class="poll-admin-id" name="poll[adminId]"><br>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About Us</h5>
+          <p class="grey-text text-lighten-4">Collaborative is a crowdsourced polling application for surveying end-user preferences.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Admin</a></li>
+            <li><a class="white-text" href="#!">Voter</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Steve Kinney</a></li>
+            <li><a class="white-text" href="#!">Tan Doan</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Template Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/client.js"></script>
+  </body>
+</html>

@@ -1,41 +1,112 @@
-<div id="choices">
-  <h2><%= poll.question %></h2>
-  <button><%= poll.responses[0] %></button>
-  <button><%= poll.responses[1] %></button>
-  <button><%= poll.responses[2] %></button>
-  <button><%= poll.responses[3] %></button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Collaborative</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+</head>
+<body>
+
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Collaborative</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+
+        <div id="choices">
+          <h2><%= poll.question %></h2><br>
+
+          <div id="your-vote"></div><br>
+          <div id="post-vote-message"></div><br>
+
+          <button><%= poll.responses[0] %></button>
+          <button><%= poll.responses[1] %></button>
+          <button><%= poll.responses[2] %></button>
+          <button><%= poll.responses[3] %></button>
+        </div>
+        <br/>
+
+        <table class="striped">
+          <thead>
+            <tr>
+                <th data-field="id">Poll Results for <%= poll.question %></th>
+                <th data-field="name">Vote Count</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><%= poll.responses[0] %></td>
+              <td id="<%= poll.responses[0].toUpperCase() %>-votes">0</td>
+            </tr>
+            <tr>
+              <td><%= poll.responses[1] %></td>
+              <td id="<%= poll.responses[1].toUpperCase() %>-votes">0</td>
+            </tr>
+            <tr>
+              <td><%= poll.responses[2] %></td>
+              <td id="<%= poll.responses[2].toUpperCase() %>-votes">0</td>
+            </tr>
+            <tr>
+              <td><%= poll.responses[3] %></td>
+              <td id="<%= poll.responses[3].toUpperCase() %>-votes">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<div class="center-align">
+  <img src="http://www.quickmeme.com/img/43/43ede25b248659e1472c99bf609002408fab6d4a3280c81d8e844c10b6cf76a2.jpg">
 </div>
-<br/>
 
-<div id="your-vote"></div>
+<footer class="page-footer orange">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text">About Us</h5>
+        <p class="grey-text text-lighten-4">Collaborative is a crowdsourced polling application for surveying end-user preferences.</p>
 
-<table class="striped">
-  <thead>
-    <tr>
-        <th data-field="id">Poll Results for <%= poll.question %></th>
-        <th data-field="name">Vote Count</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <tr>
-      <td><%= poll.responses[0] %></td>
-      <td id="<%= poll.responses[0].toUpperCase() %>-votes">0</td>
-    </tr>
-    <tr>
-      <td><%= poll.responses[1] %></td>
-      <td id="<%= poll.responses[1].toUpperCase() %>-votes">0</td>
-    </tr>
-    <tr>
-      <td><%= poll.responses[2] %></td>
-      <td id="<%= poll.responses[2].toUpperCase() %>-votes">0</td>
-    </tr>
-    <tr>
-      <td><%= poll.responses[3] %></td>
-      <td id="<%= poll.responses[3].toUpperCase() %>-votes">0</td>
-    </tr>
-  </tbody>
-</table>
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Settings</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Admin</a></li>
+          <li><a class="white-text" href="#!">Voter</a></li>
+        </ul>
+      </div>
+      <div class="col l3 s12">
+        <h5 class="white-text">Connect</h5>
+        <ul>
+          <li><a class="white-text" href="#!">Steve Kinney</a></li>
+          <li><a class="white-text" href="#!">Tan Doan</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+    Template Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+    </div>
+  </div>
+</footer>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/client.js"></script>
+</body>
+</html>
