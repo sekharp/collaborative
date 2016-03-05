@@ -41,12 +41,12 @@ app.post('/poll', function(req, res) {
   var poll = req.body.poll;
   var id = generateId();
   app.locals.polls[id] = poll;
+  poll['votes'] = [];
   res.redirect('/poll/' + id);
 });
 
 app.get('/poll/:id', function (req, res){
   var poll = app.locals.polls[req.params.id];
-  console.log(poll)
   res.render('poll', { poll: poll });
 });
 
@@ -55,19 +55,16 @@ app.get('/polls/:id/:adminId', function(req, res){
   res.render('public/poll.ejs', {poll: poll, id: req.params.id, adminID: req.params.adminId});
 })
 
-// io.on('connection', function (socket) {
-//   console.log('A user has connected.', io.engine.clientsCount);
-//
-//   io.sockets.emit('userConnection', io.engine.clientsCount);
-//
-//   socket.emit('statusMessage', 'You have connected.');
-//
-//   socket.emit('sendPollData', pollData);
-//   console.log(pollData);
-//
-//   socket.on('disconnect', function () {
-//     console.log('A user has disconnected.', io.engine.clientsCount);
-//   });
-// });
+io.on('connection', function (socket) {
+  console.log("A user is connected");
+  socket.on('message', function (channel, message) {
+    if (channel === 'voteCast') {
+      var poll = app.locals.polls[message.id];
+      poll['votes'].push(message.vote);
+      // socket.emit('currentChoice', message.vote);
+      io.sockets.emit('voteCount', countingVotes(poll));
+    }
+  });
+});
 
-module.exports = server;
+module.exports = app;
