@@ -25,10 +25,15 @@
   <div class="container">
     <div class="row">
       <div class="col l6 s12"><br>
-        <h3>Admin Poll Dashboard</h3>
+        <h2>Admin Poll Dashboard</h2>
 
         <% if(poll['status'] === "open") { %>
           <div id="closed-vote-message"><button id="close-button">End This Poll</button></div><br>
+        <% } %>
+
+        <% if(poll['status'] === "closed") { %>
+          <h4>This Poll Is Closed!</h4>
+          <h5>The top choice was <%= poll_winner[0] %> with <%= poll_winner[1] %> votes.</h5>
         <% } %>
 
         <button><a href="/poll/<%= id %>">User Poll Page</a></button>

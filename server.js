@@ -16,6 +16,7 @@ const io = socketIo(server);
 const bodyParser = require('body-parser');
 const generateId = require('./lib/generate-id');
 const countingVotes = require('./lib/counting-votes');
+const pollWinner = require('./lib/poll-winner');
 
 app.locals.polls = {};
 app.locals.title = "Collaborative";
@@ -53,20 +54,20 @@ app.post('/poll', function(req, res) {
 
 app.get('/poll/:id', function (req, res){
   var poll = app.locals.polls[req.params.id];
-  var poll_winner = []
   var counted_votes = countingVotes(poll)
   if (poll['votes']) {
-    for (var response in counted_votes)
-      poll_winner.push([response, counted_votes[response]])
-      poll_winner.sort(function(a, b) {return a[1] - b[1]}).reverse()
-      poll_winner = poll_winner[0]
+    var poll_winner = pollWinner(counted_votes);
   };
   res.render('poll', { poll: poll, votes: counted_votes, poll_winner: poll_winner });
 });
 
 app.get('/poll/:id/:adminId', function(req, res){
   var poll = app.locals.polls[req.params.id];
-  res.render('admin-poll', { poll: poll, id: req.params.id, votes: countingVotes(poll) });
+  var counted_votes = countingVotes(poll)
+  if (poll['votes']) {
+    var poll_winner = pollWinner(counted_votes);
+  };
+  res.render('admin-poll', { poll: poll, id: req.params.id, votes: counted_votes, poll_winner: poll_winner });
 })
 
 io.on('connection', function (socket) {
