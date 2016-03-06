@@ -71,7 +71,7 @@ io.on('connection', function (socket) {
       }
     }
 
-    if (channel === 'endPoll' + message) { // message is just poll ID here
+    if (channel === 'endPoll' + message) {
       var poll = app.locals.polls[message];
       poll['status'] = 'closed';
       io.sockets.emit('pollOver' + message);

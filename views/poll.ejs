@@ -56,7 +56,7 @@
           <% if(poll['status'] === "closed") { %>
             <% for (var key in votes) { %>
               <tr>
-                <td> <%= key %></td>
+                <td><%= key %></td>
                 <td><%= votes[key] %></td>
               </tr>
             <% }; %>
