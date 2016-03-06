@@ -52,9 +52,7 @@ app.post('/poll', function(req, res) {
 
 app.get('/poll/:id', function (req, res){
   var poll = app.locals.polls[req.params.id];
-  console.log(poll);
-  var votes = countingVotes(poll);
-  res.render('poll', { poll: poll, votes: votes });
+  res.render('poll', { poll: poll, votes: countingVotes(poll) });
 });
 
 app.get('/poll/:id/:adminId', function(req, res){

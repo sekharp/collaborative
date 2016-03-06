@@ -42,22 +42,12 @@
           </thead>
 
           <tbody>
-            <tr>
-              <td><%= poll.responses[0] %></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><%= poll.responses[1] %></td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td><%= poll.responses[2] %></td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td><%= poll.responses[3] %></td>
-              <td>0</td>
-            </tr>
+            <% for (var key in votes) { %>
+              <tr>
+                <td> <%= key %></td>
+                <td><%= votes[key] %></td>
+              </tr>
+            <% }; %>
           </tbody>
         </table>
       </div>

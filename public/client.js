@@ -2,7 +2,6 @@ var socket = io();
 var pollId = window.location.pathname.split('/')[2];
 var buttons = document.querySelectorAll('#choices button')
 
-var yourVote = document.getElementById('your-vote');
 var postVoteMessage = document.getElementById('post-vote-message');
 var votesCast = 0;
 
@@ -15,10 +14,11 @@ var adminVoteResults = document.getElementById('admin-vote-results');
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function() {
     if (votesCast >= 1){
-      postVoteMessage.innerText = "You cannot vote twice.";
+      postVoteMessage.innerHTML = "<h4>You cannot vote twice.</h4>";
     } else {
       socket.send('voteCast', { vote: this.innerText, id: pollId });
       votesCast ++;
+      postVoteMessage.innerHTML = "<h4>You voted for " + this.innerText + "</h4>"
     };
   });
 }

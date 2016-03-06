@@ -33,9 +33,7 @@
         <% if(poll['status'] === "open") { %>
           <div id="choices">
             <h2><%= poll.question %></h2><br>
-
             <div id="post-vote-message"></div><br>
-            <div id="closed-vote-message"></div><br>
 
             <button class="waves-effect waves-light btn"><%= poll.responses[0] %></button>
             <button class="waves-effect waves-light btn"><%= poll.responses[1] %></button>
@@ -54,6 +52,15 @@
           </thead>
 
           <tbody id="vote-results">
+
+          <% if(poll['status'] === "closed") { %>
+            <% for (var key in votes) { %>
+              <tr>
+                <td> <%= key %></td>
+                <td><%= votes[key] %></td>
+              </tr>
+            <% }; %>
+          <% } %>
           </tbody>
         </table>
       </div>
