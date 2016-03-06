@@ -26,23 +26,23 @@
     <div class="row">
       <div class="col l6 s12">
 
-        <% if( poll.status === "open" ) { %>
+        <% if(poll['status'] === "closed") { %>
+          <h3>This Poll Is Closed!</h3>
+        <% } %>
+
+        <% if(poll['status'] === "open") { %>
           <div id="choices">
             <h2><%= poll.question %></h2><br>
 
-            <div id="your-vote"></div><br>
             <div id="post-vote-message"></div><br>
+            <div id="closed-vote-message"></div><br>
 
-            <button><%= poll.responses[0] %></button>
-            <button><%= poll.responses[1] %></button>
-            <button><%= poll.responses[2] %></button>
-            <button><%= poll.responses[3] %></button>
+            <button class="waves-effect waves-light btn"><%= poll.responses[0] %></button>
+            <button class="waves-effect waves-light btn"><%= poll.responses[1] %></button>
+            <button class="waves-effect waves-light btn"><%= poll.responses[2] %></button>
+            <button class="waves-effect waves-light btn"><%= poll.responses[3] %></button>
           </div>
           <br/>
-        <% } %>
-
-        <% if( poll.status === "open" ) { %>
-          <div id="closed-poll-message"></div>
         <% } %>
 
         <table class="striped">
@@ -53,32 +53,12 @@
             </tr>
           </thead>
 
-          <tbody>
-            <tr>
-              <td><%= poll.responses[0] %></td>
-              <td id="<%= poll.responses[0].toUpperCase() %>-votes">0</td>
-            </tr>
-            <tr>
-              <td><%= poll.responses[1] %></td>
-              <td id="<%= poll.responses[1].toUpperCase() %>-votes">0</td>
-            </tr>
-            <tr>
-              <td><%= poll.responses[2] %></td>
-              <td id="<%= poll.responses[2].toUpperCase() %>-votes">0</td>
-            </tr>
-            <tr>
-              <td><%= poll.responses[3] %></td>
-              <td id="<%= poll.responses[3].toUpperCase() %>-votes">0</td>
-            </tr>
+          <tbody id="vote-results">
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
-<div class="center-align">
-  <img src="http://www.quickmeme.com/img/43/43ede25b248659e1472c99bf609002408fab6d4a3280c81d8e844c10b6cf76a2.jpg">
-</div>
 
 <footer class="page-footer orange">
   <div class="container">

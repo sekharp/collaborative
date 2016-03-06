@@ -9,6 +9,9 @@ var votesCast = 0;
 var closingButton = document.getElementById('close-button');
 var closedVoteMessage = document.getElementById('closed-vote-message');
 
+var voteResults = document.getElementById('vote-results');
+var adminVoteResults = document.getElementById('admin-vote-results');
+
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function() {
     if (votesCast >= 1){
@@ -21,9 +24,11 @@ for (var i = 0; i < buttons.length; i++) {
 }
 
 socket.on('voteCount', function (votes) {
-  for(var key in votes){
-    document.getElementById(key.toUpperCase() + '-votes').innerText = votes[key];
-  };
+  var result = "";
+  for (var key in votes) {
+    result += "<tr><td>" + key + "</td><td>" + votes[key] + "</td></tr>";
+  }
+  voteResults.innerHTML = "<tbody>" + result + "</tbody>";
 });
 
 if (closingButton) {

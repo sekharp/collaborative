@@ -25,8 +25,9 @@
   <div class="container">
     <div class="row">
       <div class="col l6 s12"><br>
+        <h3>Admin Poll Dashboard</h3>
 
-        <% if( poll['status'] === "open" ) { %>
+        <% if(poll['status'] === "open") { %>
           <div id="closed-vote-message"><button id="close-button">End This Poll</button></div><br>
         <% } %>
 
@@ -43,29 +44,25 @@
           <tbody>
             <tr>
               <td><%= poll.responses[0] %></td>
-              <td id="<%= poll.responses[0].toUpperCase() %>-votes">0</td>
+              <td></td>
             </tr>
             <tr>
               <td><%= poll.responses[1] %></td>
-              <td id="<%= poll.responses[1].toUpperCase() %>-votes">0</td>
+              <td>0</td>
             </tr>
             <tr>
               <td><%= poll.responses[2] %></td>
-              <td id="<%= poll.responses[2].toUpperCase() %>-votes">0</td>
+              <td>0</td>
             </tr>
             <tr>
               <td><%= poll.responses[3] %></td>
-              <td id="<%= poll.responses[3].toUpperCase() %>-votes">0</td>
+              <td>0</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
-<div class="center-align">
-  <img src="http://www.quickmeme.com/img/43/43ede25b248659e1472c99bf609002408fab6d4a3280c81d8e844c10b6cf76a2.jpg">
-</div>
 
 <footer class="page-footer orange">
   <div class="container">

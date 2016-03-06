@@ -52,16 +52,17 @@ app.post('/poll', function(req, res) {
 
 app.get('/poll/:id', function (req, res){
   var poll = app.locals.polls[req.params.id];
-  res.render('poll', { poll: poll });
+  console.log(poll);
+  var votes = countingVotes(poll);
+  res.render('poll', { poll: poll, votes: votes });
 });
 
 app.get('/poll/:id/:adminId', function(req, res){
   var poll = app.locals.polls[req.params.id];
-  res.render('admin-poll', { poll: poll, id: req.params.id });
+  res.render('admin-poll', { poll: poll, id: req.params.id, votes: countingVotes(poll) });
 })
 
 io.on('connection', function (socket) {
-  console.log("A user is connected");
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast') {
       var poll = app.locals.polls[message.id];
@@ -75,7 +76,6 @@ io.on('connection', function (socket) {
     if (channel === 'endPoll' + message) { // message is just poll ID here
       var poll = app.locals.polls[message];
       poll['status'] = 'closed';
-      console.log(poll);
       io.sockets.emit('pollOver' + message);
     }
   });
