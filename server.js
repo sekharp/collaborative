@@ -17,6 +17,8 @@ const bodyParser = require('body-parser');
 const generateId = require('./lib/generate-id');
 const countingVotes = require('./lib/counting-votes');
 
+const moment = require('moment');
+
 app.locals.polls = {};
 app.locals.title = "Collaborative";
 
@@ -41,8 +43,11 @@ app.post('/poll', function(req, res) {
   var poll = req.body.poll;
   var id = generateId();
   app.locals.polls[id] = poll;
+  poll['adminId'] = req.body.poll.adminId;
+  adminId = poll['adminId'];
   poll['votes'] = [];
-  res.redirect('/poll/' + id);
+  poll['status'] = 'open';
+  res.redirect('/poll/' + id + '/' + adminId);
 });
 
 app.get('/poll/:id', function (req, res){
@@ -50,9 +55,9 @@ app.get('/poll/:id', function (req, res){
   res.render('poll', { poll: poll });
 });
 
-app.get('/polls/:id/:adminId', function(req, res){
-  var poll = app.locals.poll[req.params.id];
-  res.render('public/poll.ejs', {poll: poll, id: req.params.id, adminID: req.params.adminId});
+app.get('/poll/:id/:adminId', function(req, res){
+  var poll = app.locals.polls[req.params.id];
+  res.render('admin-poll', { poll: poll, id: req.params.id });
 })
 
 io.on('connection', function (socket) {
@@ -60,9 +65,18 @@ io.on('connection', function (socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast') {
       var poll = app.locals.polls[message.id];
-      poll['votes'].push(message.vote);
-      // socket.emit('currentChoice', message.vote);
-      io.sockets.emit('voteCount', countingVotes(poll));
+
+      if (poll['status'] === 'open') {
+        poll['votes'].push(message.vote);
+        io.sockets.emit('voteCount', countingVotes(poll));
+      }
+    }
+
+    if (channel === 'endPoll' + message) { // message is just poll ID here
+      var poll = app.locals.polls[message];
+      poll['status'] = 'closed';
+      console.log(poll);
+      io.sockets.emit('pollOver' + message);
     }
   });
 });

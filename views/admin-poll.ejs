@@ -24,26 +24,13 @@
 
   <div class="container">
     <div class="row">
-      <div class="col l6 s12">
+      <div class="col l6 s12"><br>
 
-        <% if( poll.status === "open" ) { %>
-          <div id="choices">
-            <h2><%= poll.question %></h2><br>
-
-            <div id="your-vote"></div><br>
-            <div id="post-vote-message"></div><br>
-
-            <button><%= poll.responses[0] %></button>
-            <button><%= poll.responses[1] %></button>
-            <button><%= poll.responses[2] %></button>
-            <button><%= poll.responses[3] %></button>
-          </div>
-          <br/>
+        <% if( poll['status'] === "open" ) { %>
+          <div id="closed-vote-message"><button id="close-button">End This Poll</button></div><br>
         <% } %>
 
-        <% if( poll.status === "open" ) { %>
-          <div id="closed-poll-message"></div>
-        <% } %>
+        <button><a href="/poll/<%= id %>">User Poll Page</a></button>
 
         <table class="striped">
           <thead>
