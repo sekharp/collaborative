@@ -7,6 +7,8 @@ var votesCast = 0;
 
 var closingButton = document.getElementById('close-button');
 var closedVoteMessage = document.getElementById('closed-vote-message');
+var reopenButton = document.getElementById('reopen-button');
+var reopenedVoteMessage = document.getElementById('reopened-vote-message');
 
 var voteResults = document.getElementById('vote-results');
 var adminVoteResults = document.getElementById('admin-vote-results');
@@ -35,8 +37,18 @@ if (closingButton) {
   closingButton.addEventListener('click', function() {
     socket.send('endPoll' + pollId, pollId);
   });
-}
+};
+
+if (reopenButton) {
+  reopenButton.addEventListener('click', function() {
+    socket.send('reopenPoll' + pollId, pollId);
+  });
+};
 
 socket.on('pollOver' + pollId, function() {
-  closedVoteMessage.innerText = "The poll has closed! The top choice was:";
+  closedVoteMessage.innerText = "The poll has closed! Please refresh your page.";
+});
+
+socket.on('pollReopened' + pollId, function() {
+  reopenedVoteMessage.innerText = "The poll has been reopened! Please refresh your page.";
 });

@@ -29,10 +29,9 @@
 
         <% if(poll['status'] === "open") { %>
           <div id="closed-vote-message"><button id="close-button">End This Poll</button></div><br>
-        <% } %>
-
-        <% if(poll['status'] === "closed") { %>
+        <% } else { %>
           <h4>This Poll Is Closed!</h4>
+          <div id="reopened-vote-message"><button id="reopen-button">Reopen This Poll</button></div><br>
           <h5>The top choice was <%= poll_winner[0] %> with <%= poll_winner[1] %> votes.</h5>
         <% } %>
 
@@ -91,6 +90,7 @@
   </div>
 </footer>
 
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/client.js"></script>
 </body>

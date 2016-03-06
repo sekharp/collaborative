@@ -79,13 +79,19 @@ io.on('connection', function (socket) {
         poll['votes'].push(message.vote);
         io.sockets.emit('voteCount', countingVotes(poll));
       }
-    }
+    };
 
     if (channel === 'endPoll' + message) {
       var poll = app.locals.polls[message];
       poll['status'] = 'closed';
       io.sockets.emit('pollOver' + message);
-    }
+    };
+
+    if (channel === 'reopenPoll' + message) {
+      var poll = app.locals.polls[message];
+      poll['status'] = 'open';
+      io.sockets.emit('pollReopened' + message);
+    };
   });
 });
 
