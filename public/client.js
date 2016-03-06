@@ -38,5 +38,5 @@ if (closingButton) {
 }
 
 socket.on('pollOver' + pollId, function() {
-  closedVoteMessage.innerText = "The poll has closed!";
+  closedVoteMessage.innerText = "The poll has closed! The top choice was:";
 });

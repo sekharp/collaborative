@@ -53,7 +53,15 @@ app.post('/poll', function(req, res) {
 
 app.get('/poll/:id', function (req, res){
   var poll = app.locals.polls[req.params.id];
-  res.render('poll', { poll: poll, votes: countingVotes(poll) });
+  var poll_winner = []
+  var counted_votes = countingVotes(poll)
+  if (poll['votes']) {
+    for (var response in counted_votes)
+      poll_winner.push([response, counted_votes[response]])
+      poll_winner.sort(function(a, b) {return a[1] - b[1]}).reverse()
+      poll_winner = poll_winner[0]
+  };
+  res.render('poll', { poll: poll, votes: counted_votes, poll_winner: poll_winner });
 });
 
 app.get('/poll/:id/:adminId', function(req, res){

@@ -28,6 +28,7 @@
 
         <% if(poll['status'] === "closed") { %>
           <h3>This Poll Is Closed!</h3>
+          <h5>The top choice was <%= poll_winner[0] %> with <%= poll_winner[1] %> votes.</h5>
         <% } %>
 
         <% if(poll['status'] === "open") { %>
@@ -40,6 +41,7 @@
             <button class="waves-effect waves-light btn"><%= poll.responses[2] %></button>
             <button class="waves-effect waves-light btn"><%= poll.responses[3] %></button>
           </div>
+          <h6>Please Vote First to See Results</h6>
           <br/>
         <% } %>
 
@@ -50,8 +52,6 @@
                 <th data-field="name">Vote Count</th>
             </tr>
           </thead>
-
-          <h5>Please Vote First to See Results</h5>
 
           <tbody id="vote-results">
 
