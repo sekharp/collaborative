@@ -17,8 +17,6 @@ const bodyParser = require('body-parser');
 const generateId = require('./lib/generate-id');
 const countingVotes = require('./lib/counting-votes');
 
-const moment = require('moment');
-
 app.locals.polls = {};
 app.locals.title = "Collaborative";
 
@@ -47,6 +45,9 @@ app.post('/poll', function(req, res) {
   adminId = poll['adminId'];
   poll['votes'] = [];
   poll['status'] = 'open';
+  if (poll['minutes']) {
+    setRuntime(poll, new Date(), poll['minutes'], id);
+  };
   res.redirect('/poll/' + id + '/' + adminId);
 });
 
@@ -78,5 +79,17 @@ io.on('connection', function (socket) {
     }
   });
 });
+
+function setRuntime(poll, dateToday, minutes, id) {
+  setTimeout(function() {
+    poll['status'] = 'closed';
+    io.sockets.emit('pollOver' + id, app.locals.polls[id]);
+  }, recordTimeDifference(dateToday, minutes));
+};
+
+function recordTimeDifference(date, minutes) {
+  var newDate = new Date(date.getTime() + minutes * 60000); // minutes to milliseconds conversion
+  return newDate - date;
+};
 
 module.exports = app;
