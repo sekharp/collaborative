@@ -52,6 +52,28 @@ describe('Server', () => {
       app.locals.polls = {};
     });
 
+
+    it('should not return 404', (done) => {
+      this.request.post('/poll', (error, response) => {
+        if (error) { done(error); }
+        assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+
+    it('should receive and store data', (done) => {
+      var payload = { poll: fixtures.validPoll };
+
+      this.request.post('/poll', { form: payload }, (error, response) => {
+        if (error) { done(error); }
+
+        var pollCount = Object.keys(app.locals.polls).length;
+
+        assert.equal(pollCount, 1, `Expected 1 poll, found ${pollCount}`);
+
+        done();
+      });
+    });
   });
 
   describe('GET /polls/:id', () => {
