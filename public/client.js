@@ -46,7 +46,7 @@ if (reopenButton) {
 };
 
 socket.on('pollOver' + pollId, function() {
-  closedVoteMessage.innerText = "The poll has closed! Please refresh your page.";
+  closedVoteMessage.innerText = "The poll has closed! Please refresh your page to see results and winner.";
 });
 
 socket.on('pollReopened' + pollId, function() {
