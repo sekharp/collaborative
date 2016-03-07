@@ -150,17 +150,27 @@ describe('Server', () => {
       });
     });
 
-    it('should return a page that has the poll responsess', (done) => {
+    it('should return a page that has the poll responses', (done) => {
       var poll = app.locals.polls.testPoll;
 
       this.request.get('/poll/testPoll', (error, response) => {
         if(error) { done(error); }
         assert(response.body.includes(poll.responses[0]),
-               `"${response.body}" does not include "${poll.responses.first}".`);
+          `"${response.body}" does not include "${poll.responses.first}".`);
         done();
       });
     });
 
+    it('should not return a page that has a poll responses not provided initially by admin', (done) => {
+      var poll = app.locals.polls.testPoll;
+
+      this.request.get('/poll/testPoll', (error, response) => {
+        if(error) { done(error); }
+        assert((response.body.includes("Jesus would use Slack") === false),
+          `"${response.body}" does not include "Jesus would use Slack".`);
+        done();
+      });
+    });
 
     it('should show closed message if poll is closed', (done) => {
       var poll = app.locals.polls.testPoll;
