@@ -5,10 +5,34 @@ const fixtures = require('./fixtures');
 
 describe('Server', () => {
 
-    it('responds with success', function(done){
-      request(app)
-        .get('/')
-        .expect(200, done);
+  before((done) => {
+    this.port = 9876;
+
+    this.server = app.listen(this.port, (err, result) => {
+      if (err) { return done(err); }
+      done();
+    });
+
+    this.request = request.defaults({
+      baseUrl: 'http://localhost:9876/'
+    });
+  });
+
+  after(() => {
+    this.server.close();
+  });
+
+  it('should exist', () => {
+    assert(app);
+  });
+
+  describe('GET /', () => {
+    it('should return a 200', (done) => {
+      this.request.get('/', (error, response) => {
+        if (error) { done(error); }
+        assert.equal(response.statusCode, 200);
+        done();
+      });
     });
 
     it('should have a body with the name of the application', (done) => {
@@ -23,10 +47,18 @@ describe('Server', () => {
     });
   });
 
-  describe('undefined routes', function(){
-    it('respond with a 404', function(done){
-      request(app)
-        .get('/not-real')
-        .expect(404, done);
+  describe('POST /poll', () => {
+    beforeEach(() => {
+      app.locals.polls = {};
     });
+
+  });
+
+  describe('GET /polls/:id', () => {
+    // moar tests hurr
+  });
+
+  describe('GET /polls/:id/:adminId', () => {
+    // moar tests hurr
+  });
 });
