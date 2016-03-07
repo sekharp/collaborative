@@ -5,28 +5,6 @@ const fixtures = require('./fixtures');
 
 describe('Server', () => {
 
-  before((done) => {
-    this.port = 3000;
-
-    this.server = app.listen(this.port, (err, result) => {
-      if (err) { return done(err); }
-      done();
-    });
-
-    this.request = request.defaults({
-      baseUrl: 'http://localhost:3000/'
-    });
-  });
-
-  after(() => {
-    this.server.close();
-  });
-
-  it('should exist', () => {
-    assert(app);
-  });
-
-  describe('GET /', function(){
     it('responds with success', function(done){
       request(app)
         .get('/')
@@ -51,5 +29,4 @@ describe('Server', () => {
         .get('/not-real')
         .expect(404, done);
     });
-  });
 });
