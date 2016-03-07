@@ -32,7 +32,9 @@
         <% } else { %>
           <h4>This Poll Is Closed!</h4>
           <div id="reopened-vote-message"><button id="reopen-button">Reopen This Poll</button></div><br>
-          <h5>The top choice was <%= poll_winner[0] %> with <%= poll_winner[1] %> votes.</h5>
+          <% if(poll_winner) { %>
+            <h5>The top choice was <%= poll_winner[0] %> with <%= poll_winner[1] %> votes.</h5>
+          <% } %>
         <% } %>
 
         <button><a href="/poll/<%= id %>">User Poll Page</a></button>

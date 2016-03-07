@@ -42,7 +42,6 @@ app.post('/poll', function(req, res) {
   var poll = req.body.poll;
   var id = generateId();
   app.locals.polls[id] = poll;
-  poll['adminId'] = req.body.poll.adminId;
   adminId = poll['adminId'];
   poll['votes'] = [];
   poll['status'] = 'open';
@@ -55,18 +54,22 @@ app.post('/poll', function(req, res) {
 app.get('/poll/:id', function (req, res){
   var poll = app.locals.polls[req.params.id];
   var counted_votes = countingVotes(poll)
+
   if (poll['votes']) {
     var poll_winner = pollWinner(counted_votes);
   };
+
   res.render('poll', { poll: poll, votes: counted_votes, poll_winner: poll_winner });
 });
 
 app.get('/poll/:id/:adminId', function(req, res){
   var poll = app.locals.polls[req.params.id];
   var counted_votes = countingVotes(poll)
+
   if (poll['votes']) {
     var poll_winner = pollWinner(counted_votes);
   };
+
   res.render('admin-poll', { poll: poll, id: req.params.id, votes: counted_votes, poll_winner: poll_winner });
 })
 
