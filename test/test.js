@@ -99,6 +99,31 @@ describe('Server', () => {
         done();
       });
     });
+
+    it('should return a page with current poll question responses', (done) => {
+      var poll = app.locals.polls.testPoll;
+
+      this.request.get('/poll/testPoll/adminId', (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.question),
+          `"${response.body}" does not include "${poll.question}"`);
+        assert(response.body.includes(poll.responses[0]),
+          `"${response.body}" does not include "${poll.responses.first}".`);
+        done();
+      });
+    });
+
+    it('should return a page with button link to user poll page', (done) => {
+      var poll = app.locals.polls.testPoll;
+      var button_to_poll = "<button><a href='/poll/testPoll'>User Poll Page</a></button>"
+
+      this.request.get('/poll/testPoll/adminId', (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes(button_to_poll),
+          `"${response.body}" does not include "${button_to_poll}".`);
+        done();
+      });
+    });
   });
 
   describe('GET /polls/:id', () => {
