@@ -1,5 +1,5 @@
 exports.validPoll = {
-  title: 'WWJD',
+  question: 'WWJD',
   responses: [ 'A', 'B', 'C', 'D' ],
   votes: ['A', 'D'],
   adminId: "asdf",

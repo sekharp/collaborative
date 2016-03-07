@@ -74,13 +74,78 @@ describe('Server', () => {
         done();
       });
     });
-  });
 
-  describe('GET /polls/:id', () => {
-    // moar tests hurr
+    it('should redirect the poll creating admin to their poll dashboard', (done) => {
+      var payload = { poll: fixtures.validPoll };
+
+      this.request.post('/poll', { form: payload }, (error, response) => {
+        if (error) { done(error); }
+        var newPollId = Object.keys(app.locals.polls)[0];
+        assert.equal(response.headers.location, '/poll/' + newPollId + '/asdf');
+        done();
+      });
+    });
   });
 
   describe('GET /polls/:id/:adminId', () => {
-    // moar tests hurr
+    beforeEach(function() {
+      app.locals.polls.testPoll = fixtures.validPoll;
+    });
+
+    it('should not return a 404', (done) => {
+      this.request.get('/poll/testPoll/adminId', (error, response) => {
+        if (error) { done(error); }
+        assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+  });
+
+  describe('GET /polls/:id', () => {
+    beforeEach(function() {
+      app.locals.polls.testPoll = fixtures.validPoll;
+    });
+
+    it('should not return a 404', (done) => {
+      this.request.get('/poll/testPoll', (error, response) => {
+        if (error) { done(error); }
+        assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+
+    it('should return a page that has the title of the poll', (done) => {
+      var poll = app.locals.polls.testPoll;
+
+      this.request.get('/poll/testPoll', (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.question),
+          `"${response.body}" does not include "${poll.question}"`);
+        done();
+      });
+    });
+
+    it('should return a page that has the poll responsess', (done) => {
+      var poll = app.locals.polls.testPoll;
+
+      this.request.get('/poll/testPoll', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes(poll.responses[0]),
+               `"${response.body}" does not include "${poll.responses.first}".`);
+        done();
+      });
+    });
+
+
+    it('should show closed message if poll is closed', (done) => {
+      var poll = app.locals.polls.testPoll;
+      poll['status'] = 'closed';
+
+      this.request.get('/poll/testPoll', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes("This Poll Is Closed!"));
+        done();
+      });
+    });
   });
 });
